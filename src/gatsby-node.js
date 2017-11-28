@@ -8,7 +8,7 @@ const error = (src, dest, err) => {
 };
 const success = (src, dest) => console.log(`gatsby-plugin-copy: ${src} -> ${dest} \u2714`);
 
-exports.onPostBuild = (args, pluginOptions) => {
+exports.onPostBootstrap = (args, pluginOptions) => {
   delete pluginOptions.plugins; // eslint-disable-line no-param-reassign
   const { verbose } = pluginOptions;
   delete pluginOptions.verbose; // eslint-disable-line no-param-reassign
