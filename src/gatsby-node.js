@@ -15,13 +15,20 @@ exports.onPostBootstrap = (args, pluginOptions) => {
   const files = pluginOptions;
   const promises = Object.keys(files).map((src) => {
     const dest = files[src];
-    return fse.copy(src, dest).then(() => {
+    let promsie;
+
+    try {
+      fse.copySync(src, dest);
       if (verbose) {
         success(src, dest);
       }
-    }).catch((err) => {
+      promise = Promise.resolve();
+    } catch (err){
       error(src, dest, err);
-    });
+      promise = Promise.reject();
+    }
+
+    return promise;
   });
 
   return Promise.all(promises);
