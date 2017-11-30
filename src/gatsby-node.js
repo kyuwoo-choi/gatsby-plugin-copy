@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const path = require('path');
 const fse = require('fs-extra');
 
 const error = (src, dest, err) => {
@@ -18,7 +19,9 @@ exports.onPostBootstrap = (args, pluginOptions) => {
     let promsie;
 
     try {
-      fse.copySync(src, dest);
+      fse.copySync(src, dest, {
+        filter: filePath => filePath.split(path.sep).indexOf('.git') < 0
+      });
       if (verbose) {
         success(src, dest);
       }
